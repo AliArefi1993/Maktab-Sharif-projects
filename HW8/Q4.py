@@ -9,4 +9,4 @@ def check_special_character(text):
 
 
 if __name__ == '__main__':
-    print(check_special_character("Ao5$il"))
+    print(check_special_character("il"))

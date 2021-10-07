@@ -8,4 +8,4 @@ def check_phone_number(number):
 
 
 if __name__ == '__main__':
-    print(check_phone_number("09301605684"))
+    print(check_phone_number("0930160568994"))
