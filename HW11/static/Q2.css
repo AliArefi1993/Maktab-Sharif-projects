@@ -1,0 +1,168 @@
+@font-face{
+    font-family: blogFont;
+    src:url('fonts/vazir.ttf');
+  }
+  
+  * {
+    font-family: blogFont;
+  }
+  
+ 
+ body {
+     direction : rtl;
+     text-align: right;
+     margin : 0px;
+ }
+
+.header {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-style: solid;
+    border-color: black;
+    text-align: center;
+    text-align: center;
+    /* background: rgb(182, 144, 218); */
+    font-size : 20px;
+    padding : 25px;
+}
+
+.navbar {
+    padding: 0;
+    /* border-style: solid;
+    border-color: black; */
+    /* background : #f1f1f1 */
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding: 0;
+    display: flex;
+}
+
+.navbar ul li{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.navbar ul li a {
+    text-decoration:none;
+    color: black;
+    padding: 10px;
+    border-style: solid;
+    border-color: black;
+    border-right: none;
+}
+
+.row { 
+    display : flex;
+}
+
+.column {
+    min-height: 200px;
+    background : #f1f1f1;
+    display : flex;
+    flex-direction : column;
+}
+
+
+.side {
+    flex :1;
+    background :#f6f2d4;
+}
+
+.column.main {
+    padding: 2%;
+    border-style: solid;
+    border-color: black;
+    margin: 2%;
+    flex : 2;
+}
+
+
+
+.side img { 
+    width : 100%;
+    height: 100px;
+}
+
+
+
+.footer {
+    text-align: center;
+    padding: 5px;
+    background: lightblue;
+    /* position: fixed; */
+    bottom: 0;
+    width: 100%;
+}
+
+@media (max-width : 600px){
+    .row {
+        flex-direction: column;
+        -webkit-flex-direction : column;
+    }
+}
+
+.first img {
+    float: left;
+    width:30%;
+    height:70%;
+    margin-right:15px;
+  }
+.second img {
+    float: left;
+    width:20%;
+    height:70%;
+    margin-left:10%;
+  }
+
+  input[type=text] {
+    border: 3px solid #ccc;  
+    border-radius: 10px ;
+
+  }
+
+.column.side{
+    padding: 2%;
+    border-style: solid;
+    border-color: black;
+    margin: 2%;
+    display: flex;
+}
+
+
+
+
+.sidebar {
+
+    padding: 0;
+    /* border-style: solid;
+    border-color: black; */
+    /* background : #f1f1f1 */
+}
+
+.sidebar ul {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding: 0;
+    display: flex;
+}
+
+.sidebar ul li{
+    width: 100%;
+
+}
+.sidebar ul li a {
+    display: block;
+    width: 100%;
+    text-decoration:none;
+    color: black;
+    padding: 10px 0;
+
+    border-style: solid;
+    border-color: black;
+}

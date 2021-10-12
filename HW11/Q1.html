@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <title>js</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/Q1.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-md-12">
+            <table class="table responsive">
+                <thead>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>last name</th>
+                    <th>address</th>
+                    <th>status</th>
+                    <th>edit</th>
+                    <th>delete</th>
+                    <th>copy</th>
+                </thead>
+                <tbody id="bodyMyTable">
+                    <tr>
+                        <td>1</td>
+                        <td>alex</td>
+                        <td>alex</td>
+                        <td>alex</td>
+                        <td>
+                            <button type="button" class="btn btn-success" onclick="setAttr(this)">
+                                status
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal"
+                                onclick="edit_row_table(this)">
+                                edit
+                            </button>
+                        </td>
+                        <td>
+                            <span class=" btn btn-danger" onclick="delete_row_table(this)">delete</span>
+
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-secondary" onclick="copy_row_table(this)">
+                                copy
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>alex</td>
+                        <td>alex</td>
+                        <td>alex</td>
+                        <td>
+                            <button type="button" class="btn btn-success" onclick="setAttr(this)">
+                                status
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal"
+                                onclick="edit_row_table(this)">
+                                edit
+                            </button>
+                        </td>
+                        <td>
+                            <span class=" btn btn-danger" onclick="delete_row_table(this)">delete</span>
+
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-secondary" onclick="copy_row_table(this)">
+                                copy
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>alex</td>
+                        <td>alex</td>
+                        <td>alex</td>
+                        <td>
+                            <button type="button" class="btn btn-success" onclick="setAttr(this)">
+                                status
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal"
+                                onclick="edit_row_table(this)">
+                                edit
+                            </button>
+                        </td>
+                        <td>
+                            <span class=" btn btn-danger" onclick="delete_row_table(this)">delete</span>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-secondary" onclick="copy_row_table(this)">
+                                copy
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container mt-3">
+                        <h1>edit </h1>
+                        <p>enter new values</p>
+                        <form id="modal_form">
+                            <div class="input-group mb-3 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">name</span>
+                                </div>
+                                <input type="text" class="form-control" id="item_name">
+                            </div>
+
+                            <div class="input-group mb-3 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">lastname</span>
+                                </div>
+                                <input type="text" class="form-control" id="item_lastname">
+                            </div>
+
+                            <div class="input-group mb-3 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">address</span>
+                                </div>
+                                <input type="text" class="form-control" id="item_address">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+
+    <script>
+        function firstFun() {
+            console.log('test functon')
+            document.getElementById('demo').innerHTML = Date()
+        }
+        function setAttr(params) {
+            console.log('test functon')
+            if (params.className === "btn btn-success") {
+                params.className = "btn btn-warning";
+                params.innerHTML = "not set";
+                return;
+            } else if (params.className === "btn btn-warning") {
+                params.className = "btn btn-danger";
+                params.innerHTML = "disable";
+                return;
+            } else if (params.className === "btn btn-danger") {
+                params.className = "btn btn-success";
+                params.innerHTML = "enable";
+                return;
+            }
+        }
+        function delete_row_table(that) {
+            console.log('mohammad')
+            console.log('this ', that.classList)
+            console.log(that.closest('tr'))
+            that_tr = that.closest('tr').remove()
+        }
+
+        function edit_row_table(that) {
+
+            console.log(that)
+            that_tr = that.closest('tr')
+            console.log(that.closest('tr'))
+            modal_body = document.getElementsByClassName('modal-body')
+            td_1 = that_tr.getElementsByTagName('td')[0].innerText
+            td_2 = that_tr.getElementsByTagName('td')[1].innerText
+            td_3 = that_tr.getElementsByTagName('td')[2].innerText
+            td_4 = that_tr.getElementsByTagName('td')[3].innerText
+            document.getElementById('modal_form').addEventListener("submit", handelModalInput)
+            function handelModalInput(params) {
+                params.preventDefault()
+                that_tr.getElementsByTagName('td')[1].innerText = document.getElementById('item_name').value
+                that_tr.getElementsByTagName('td')[2].innerText = document.getElementById('item_lastname').value
+                that_tr.getElementsByTagName('td')[3].innerText = document.getElementById('item_address').value
+            }
+        }
+
+        function status_row_table(that) {
+            console.log(that)
+            that_tr = that.closest('tr')
+            console.log(that.closest('tr'))
+            modal_body = document.getElementsByClassName('modal-body')
+            paragraph = document.createElement("p");
+            td_1 = that_tr.getElementsByTagName('td')[0].innerText
+            td_2 = that_tr.getElementsByTagName('td')[1].innerText
+            td_3 = that_tr.getElementsByTagName('td')[2].innerText
+            td_4 = that_tr.getElementsByTagName('td')[3].innerText
+            node = document.createTextNode(td_1 + " " + td_2 + " " + td_3 + " " + td_4);
+            paragraph.appendChild(node);
+            modal_body[0].appendChild(paragraph)
+        }
+
+        function copy_row_table(that) {
+            that_tr = that.closest('tr')
+            td_1 = that_tr.getElementsByTagName('td')[0].innerText
+            td_2 = that_tr.getElementsByTagName('td')[1].innerText
+            td_3 = that_tr.getElementsByTagName('td')[2].innerText
+            td_4 = that_tr.getElementsByTagName('td')[3].innerText
+            td_5 = that_tr.getElementsByTagName('td')[4].innerHTML
+            td_6 = that_tr.getElementsByTagName('td')[5].innerHTML
+            td_7 = that_tr.getElementsByTagName('td')[6].innerHTML
+            td_8 = that_tr.getElementsByTagName('td')[7].innerHTML
+            var table = document.getElementById("bodyMyTable");
+            var row = table.insertRow(0);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            var cell6 = row.insertCell(5);
+            var cell7 = row.insertCell(6);
+            var cell8 = row.insertCell(7);
+            cell1.innerHTML = td_1;
+            cell2.innerHTML = td_2;
+            cell3.innerHTML = td_3;
+            cell4.innerHTML = td_4;
+            cell5.innerHTML = td_5;
+            cell6.innerHTML = td_6;
+            cell7.innerHTML = td_7;
+            cell8.innerHTML = td_8;
+        }
+    </script>
+</body>
+
+</html>
