@@ -60,7 +60,7 @@ class Ticket:
                 Log.add_log(
                     f"Entered discount code isn't valid for {choosed_event['event_name']}")
             self.interface.show_fee(choosed_event['fee'], quantity, discount)
-            if int(choosed_event['remaining_capacity']) > int(quantity):
+            if int(choosed_event['remaining_capacity']) >= int(quantity):
                 if self.interface.ask_payment():
                     self.interface.show_information(
                         f'You successfuly bought {quantity} tickets.')

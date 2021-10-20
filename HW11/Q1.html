@@ -160,10 +160,7 @@
     <!-- End Modal -->
 
     <script>
-        function firstFun() {
-            console.log('test functon')
-            document.getElementById('demo').innerHTML = Date()
-        }
+
         function setAttr(params) {
             console.log('test functon')
             if (params.className === "btn btn-success") {
@@ -181,7 +178,6 @@
             }
         }
         function delete_row_table(that) {
-            console.log('mohammad')
             console.log('this ', that.classList)
             console.log(that.closest('tr'))
             that_tr = that.closest('tr').remove()

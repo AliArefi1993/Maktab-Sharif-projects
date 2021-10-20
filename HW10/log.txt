@@ -192,3 +192,15 @@
 2021-10-07 23:31:13.797721 new event(concert_test) has been created
 2021-10-07 23:31:13.799043 new event(concert_test) has been created
 2021-10-07 23:31:13.800152 new event(concert_test) has been created
+2021-10-12 18:24:23.403617 admin has been logged in as admin successfully
+2021-10-12 18:26:43.514303 There isn't 200 free seat from concert_test. 
+2021-10-12 18:27:19.873469 admin has been logged in as admin successfully
+2021-10-12 18:27:37.875826 199 tickets from concert_test has been sold
+2021-10-12 18:28:42.361862 admin has been logged in as admin successfully
+2021-10-12 18:28:59.561968 200 tickets from concert_test has been sold
+2021-10-12 18:52:15.264134 user has been logged in as user successfully
+2021-10-12 18:52:33.443366 7 tickets from concert_test has been sold
+2021-10-12 19:28:29.348620 admin has been logged in as admin successfully
+2021-10-12 19:28:46.679519 1 tickets from concert_test has been sold
+2021-10-12 20:39:51.147614 admin has been logged in as admin successfully
+2021-10-12 20:40:35.210069 20 tickets from concert_test has been sold
