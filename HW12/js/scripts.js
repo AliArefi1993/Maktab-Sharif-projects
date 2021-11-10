@@ -1,9 +1,9 @@
-$(document).ready(function () {
-    $("btn").click(function () {
-        console.log("here")
-        $("#btn").hide();
-    });
-});
+// $(document).ready(function () {
+//     $("btn").click(function () {
+//         console.log("here")
+//         $("#btn").hide();
+//     });
+// });
 
 $(document).ready(function () {
     $('.btn.btn-outline-dark.mt-auto').on('click', function () {
