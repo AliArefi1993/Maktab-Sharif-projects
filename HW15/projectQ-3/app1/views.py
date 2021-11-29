@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .forms import NameForm
 from django.http import HttpResponseRedirect
+from shopUsers.models import Product
+
 # Create your views here.
 
 
@@ -12,3 +14,7 @@ def get_name(request):
     else:
         form = NameForm()
     return render(request, "name.html", {"form": form})
+
+
+def add_comment(request):
+    post = Product.objects.get(id=1)
