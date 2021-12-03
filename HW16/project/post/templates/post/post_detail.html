@@ -70,19 +70,21 @@
   <div class="container">
 
 
-  <h1 class = "text-center pt-3">{{ object.title }}</h1>
+  <h1 class = "text-center pt-3">Title:         {{ object.title }}</h1>
   <p class="text-center">{{object.pub_date}}</p>
   <img src="{{ blog.image.url }}" />
 
   <br />
   <br />
-
+  <h5>Description:</h5>
   <p>{{ object.description }}</p>
   <hr>
   <hr>
+  <h5>Comments:</h5>
+
   <hr>
 {% for comment in comment_list %}
-<p>Comment: {{ comment.text }} </p>
+<p>{{ comment.text }} </p>
 <p>owner: {{comment.user}} </p>
   <hr>
 

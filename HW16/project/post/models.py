@@ -14,7 +14,6 @@ class Post(models.Model):
     owner = models.ForeignKey(User, on_delete=DO_NOTHING)
     pub_date = models.DateTimeField(auto_now=True)
     slug = models.SlugField(max_length=100, unique=True)
-    image = models.ImageField()
 
     def random_number_generator(self):
 

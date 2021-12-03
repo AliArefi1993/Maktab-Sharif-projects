@@ -1,20 +1,29 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db.models.deletion import DO_NOTHING
 from django.db.models.fields import BLANK_CHOICE_DASH
 from django.template.defaultfilters import slugify
 from django.template.defaultfilters import slugify
 import random
 # Create your models here.
+User = get_user_model()
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField('post title', max_length=50)
     description = models.TextField()
     owner = models.ForeignKey(User, on_delete=DO_NOTHING)
     pub_date = models.DateTimeField(auto_now=True)
     slug = models.SlugField(max_length=100, unique=True)
-    image = models.ImageField()
+    image = models.ImageField(blank=True, null=True)
+    tag = models.ManyToManyField(Tag, blank=True, null=True)
 
     def random_number_generator(self):
 

@@ -1,0 +1,25 @@
+{% comment %} {% extends "theme.html" %} {% endcomment %}
+
+{% comment %} {% block content %} {% endcomment %}
+
+<div class="container">
+
+{% if messages %}
+{% comment %} <ul class="messages"> {% endcomment %}
+    {% for message in messages %}
+    <div {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }} {{message.extra_tags}}</div>
+    {% endfor %}
+{% comment %} </ul> {% endcomment %}
+{% endif %}
+
+    {% comment %} <div class="col-md-12 my-3">
+        <form action="" method="post">
+        {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="OK">
+        </form>
+    </div>
+
+</div>  {% endcomment %}
+
+{% comment %} {% endblock content %} {% endcomment %}

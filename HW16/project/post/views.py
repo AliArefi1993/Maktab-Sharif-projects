@@ -18,10 +18,10 @@ class PostDetailView(DetailView):
 
 
 def category_list(request):
-    category_obj = list(Category.objects.all())
+    category_obj = Category.objects.all()
     return render(request, 'post/category_list.html', {'categories': category_obj})
 
 
 def category_posts_list(request, id):
-    posts_obj = list(Post.objects.filter(category__id=id))
+    posts_obj = Post.objects.filter(category__id=id)
     return render(request, 'post/posts-category_list.html', {'posts': posts_obj})
