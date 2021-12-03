@@ -3,16 +3,35 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, Comment, Category
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
+
 from django.views import View
-from .forms import LoginForm
+from post.forms import LoginForm, SignUpForm, ProfileForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+
+
+# Edit Profile View
+class ProfileView(UpdateView):
+    model = User
+    form_class = ProfileForm
+    success_url = reverse_lazy('login')
+    template_name = 'post/profile.html'
+
+
+# Sign Up View
+class SignUpView(CreateView):
+    form_class = SignUpForm
+    success_url = reverse_lazy('login')
+    template_name = 'post/signup.html'
 
 
 class SuccedLogin(View):
@@ -33,6 +52,7 @@ class Login(View):
                 messages.add_message(
                     request, messages.SUCCESS, 'Login Succed.')
                 next = request.GET.get('next')
+
                 if next:
                     return redirect(request.GET.get('next'))
                 return render(request, 'post/success_login.html', {'username': user.get_username})
