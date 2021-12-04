@@ -72,10 +72,10 @@
   <h1 class = "text-center pt-3">Welcome to Ali's Blog</h1>
   <br/>
   <br/>
-  <h2>Categories</h2>
+  <h2>Tag</h2>
   <hr />
-  {% for category in object_list %}
-  <h3>{{ category.name }}</h3><a href="{% url 'category_post' id=category.id  %}">see posts </a>
+  {% for tag in object_list %}
+  <h3>{{ tag.name }}</h3><a href="{% url 'tag_post' id=tag.id  %}">see posts </a>
   <br />
   <br/>
 

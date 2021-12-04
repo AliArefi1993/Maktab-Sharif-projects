@@ -59,7 +59,7 @@
         <div class="navbar-nav ms-auto">
             <a class="nav-link" href="https://www.linkedin.com/in/ali-arefi-b8453858">Linkedin</a>
             {% comment %} <a class="nav-link" href="{% static 'resume.pdf' %}">Resume</a> {% endcomment %}
-            <a class="nav-link active" href="{% url 'postlist'%}">Blog</a>
+            <a class="nav-link active" href="{% url 'post_list'%}">Blog</a>
         </div>
       </div>
     </div>
@@ -72,7 +72,7 @@
 
   <h1 class = "text-center pt-3">{{ object.title }}</h1>
   <p class="text-center">{{object.pub_date}}</p>
-  <img src="{{ blog.image.url }}" />
+  <img src="{{ object.image.url }}" />
 
   <br />
   <br />

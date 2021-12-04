@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.db.models.deletion import DO_NOTHING
+from django.db.models.deletion import CASCADE, DO_NOTHING, PROTECT
 from django.db.models.fields import BLANK_CHOICE_DASH
 from django.template.defaultfilters import slugify
 from django.template.defaultfilters import slugify
@@ -19,10 +19,10 @@ class Tag(models.Model):
 class Post(models.Model):
     title = models.CharField('post title', max_length=50)
     description = models.TextField()
-    owner = models.ForeignKey(User, on_delete=DO_NOTHING)
+    owner = models.ForeignKey(User, on_delete=PROTECT)
     pub_date = models.DateTimeField(auto_now=True)
-    slug = models.SlugField(max_length=100, unique=True)
-    image = models.ImageField(blank=True, null=True)
+    slug = models.SlugField(max_length=100, unique=True, null=True, blank=True)
+    image = models.ImageField(blank=True, null=True, upload_to='images/')
     tag = models.ManyToManyField(Tag, blank=True, null=True)
 
     def random_number_generator(self):
@@ -45,7 +45,7 @@ def __str__(self) -> str:
 
 class Comment(models.Model):
     text = models.CharField(max_length=200)
-    post = models.ForeignKey(Post, on_delete=DO_NOTHING)
+    post = models.ForeignKey(Post, on_delete=CASCADE)
     user = models.ForeignKey(User, on_delete=DO_NOTHING)
 
     def __str__(self) -> str:

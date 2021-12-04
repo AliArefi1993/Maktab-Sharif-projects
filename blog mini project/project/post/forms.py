@@ -57,3 +57,24 @@ class SimpleModelForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField(label='username', max_length=255)
     password = forms.CharField(label='password', widget=forms.PasswordInput)
+
+
+class TagForm(forms.ModelForm):
+
+    class Meta:
+        model = Tag
+        fields = '__all__'
+
+
+class CategoryForm(forms.ModelForm):
+
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+
+class PostForm(forms.ModelForm):
+
+    class Meta:
+        model = Post
+        fields = '__all__'

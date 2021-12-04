@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.84.0">
-    <title>Ali's Blog's Categories</title>
+    <title>Ali's Blog</title>
 
 
 
@@ -59,7 +59,7 @@
         <div class="navbar-nav ms-auto">
             <a class="nav-link" href="https://www.linkedin.com/in/ali-arefi-b8453858">Linkedin</a>
             {% comment %} <a class="nav-link" href="{% static 'resume.pdf' %}">Resume</a> {% endcomment %}
-            <a class="nav-link active" href="{% url 'postlist'%}">Blog</a>
+            <a class="nav-link active" href="{% url 'post_list'%}">Blog</a>
             {% comment %} {% url 'allblogs'%} {% endcomment %}
         </div>
       </div>
@@ -72,11 +72,13 @@
   <h1 class = "text-center pt-3">Welcome to Ali's Blog</h1>
   <br/>
   <br/>
-  <h2>Categories</h2>
+  <h2>Latest Post</h2>
   <hr />
-  {% for category in object_list %}
-  <h3>{{ category.name }}</h3><a href="{% url 'category_post' id=category.id  %}">see posts </a>
+  {% for post in object_list %}
+  <a href="{% url 'postdetail' post.slug %}"> <h3>{{ post.title }}</h3></a>
+  {{post.pub_date_pretty}}
   <br />
+  <img class="img-fluid" src="{{ blog.image.url }}" height=200 width=200/>
   <br/>
 
   {% endfor %}

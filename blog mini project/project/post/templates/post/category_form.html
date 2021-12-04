@@ -1,14 +1,14 @@
 {% comment %} {% extends 'base.html' %} {% endcomment %}
 
-{% block title %}Sign Page{% endblock title %}
+{% block title %}Edit Category{% endblock title %}
 
 {% block content %} 
-    <h2>Sign Page</h2>
+    <h2>Edit Category</h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Register</button>
+        <button type="submit">Update</button>
         <br><br>
-        <a href="{% url 'post_list' %}">Home</a>
+        <a href="{% url 'category_list' %}">Back</a>
     </form>
 {% endblock content %}
