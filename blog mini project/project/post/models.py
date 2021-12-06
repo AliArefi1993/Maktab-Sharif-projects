@@ -22,7 +22,7 @@ class Post(models.Model):
     owner = models.ForeignKey(User, on_delete=PROTECT)
     pub_date = models.DateTimeField(auto_now=True)
     slug = models.SlugField(max_length=100, unique=True, null=True, blank=True)
-    image = models.ImageField(blank=True, null=True, upload_to='images/')
+    image = models.ImageField(upload_to='images/')
     tag = models.ManyToManyField(Tag, blank=True, null=True)
 
     def random_number_generator(self):
