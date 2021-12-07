@@ -1,14 +1,12 @@
-{% comment %} {% extends 'base.html' %} {% endcomment %}
+{% extends "post/base.html" %}
+{% block content %}
 
-{% block title %}Creaet Category{% endblock title %}
-
-{% block content %} 
     <h2>create Category </h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">OK</button>
         <br><br>
-        <a href="{% url 'post_list' %}">Home</a>
+        <a href="{% url 'dashboard' %}">Home</a>
     </form>
 {% endblock content %}

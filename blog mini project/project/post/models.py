@@ -54,7 +54,7 @@ class Comment(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
-    post = models.ManyToManyField(Post)
+    post = models.ManyToManyField(Post, null=True, blank=True)
 
     def __str__(self) -> str:
         return self.name

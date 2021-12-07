@@ -1,8 +1,6 @@
-{% comment %} {% extends 'base.html' %} {% endcomment %}
+  {% extends "post/base.html" %}
+{% block content %}
 
-{% block title %}Profile Page{% endblock title %}
-
-{% block content %} 
     <h2>Profile Page</h2>
     <form method="post">
         {% csrf_token %}

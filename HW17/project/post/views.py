@@ -1,7 +1,8 @@
 from post.models import Post, Comment, Category
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from post.serializers import PostSerializer, PostDetailSerializer, CommentSerializer, CommentDetailSerializer, CategorySerializer, CategoryDetailSerializer
+from post.serializers import PostSerializer, PostDetailSerializer,\
+    CommentSerializer, CommentDetailSerializer, CategorySerializer, CategoryDetailSerializer
 from rest_framework.generics import get_object_or_404
 
 
@@ -27,7 +28,6 @@ def post_list(request):
         posts = Post.objects.all()
         serializer = PostSerializer(posts, many=True)
         return Response(data=serializer.data, status=200)
-    return Response(status=406)
 
 
 @api_view(['GET'])

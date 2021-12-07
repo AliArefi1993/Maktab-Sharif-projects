@@ -1,8 +1,9 @@
-{% comment %} {% extends 'base.html' %} {% endcomment %}
+{% extends "post/base.html" %}
+
+{% block content %}
 
 {% block title %}Creaet Post{% endblock title %}
 
-{% block content %} 
     <h2>Create Post </h2>
     <form method="post" enctype='multipart/form-data'>
         {% csrf_token %}

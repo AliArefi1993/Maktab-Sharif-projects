@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+</head>
+
+<body>
+
+    <Button id="getlist">users list</Button>
+    <p id='users'></p>
+
+    <Script>
+        $(document).ready(function () {
+            $("#getlist").click(function () {
+                $.get("http://127.0.0.1:8000/blog/post/", function (data, status) {
+                    console.log(data)
+                    console.log(status)
+                    $.each(data, function (index, value) {
+                        let dt = `<a href="http://127.0.0.1:8000/blog/post/${value.id}">${value.title}</a> <hr>`
+                        $("#users").append(dt)
+                    })
+                    $(".users").text(data)
+                    // $("#users").load()
+                })
+            })
+        })
+    </Script>
+</body>
+
+</html>

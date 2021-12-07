@@ -34,7 +34,7 @@ class TestComment(APITestCase):
     def setUp(self):
         user1 = mommy.make(User, username='ali909')
         post1 = mommy.make(Post)
-        mommy.make(Comment, _quantity=50)
+        mommy.make(Comment, _quantity=5)
         mommy.make(Comment, user=user1, post=post1,
                    _quantity=1, text='comment test')
 
@@ -42,10 +42,10 @@ class TestComment(APITestCase):
         url = reverse('comment_list')
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(len(resp.data), 51)
+        self.assertEqual(len(resp.data), 6)
 
     def test_post_detail(self):
-        url = reverse('comment_detail', args=[51])
+        url = reverse('comment_detail', args=[6])
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.data['user']['username'], 'ali909')
@@ -55,7 +55,7 @@ class TestCategory(APITestCase):
 
     def setUp(self):
         post1 = mommy.make(Post)
-        mommy.make(Category, _quantity=25)
+        mommy.make(Category, _quantity=5)
         mommy.make(Category, post=post1,
                    _quantity=1, name='category test')
 
@@ -63,13 +63,13 @@ class TestCategory(APITestCase):
         url = reverse('category_list')
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(len(resp.data), 26)
+        self.assertEqual(len(resp.data), 6)
 
     def test_category_detail(self):
-        url = reverse('category_detail', args=[26])
+        url = reverse('category_detail', args=[6])
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.data['name'], 'category test')
-        url = reverse('category_detail', args=[27])
+        url = reverse('category_detail', args=[7])
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 404)
