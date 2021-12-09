@@ -14,10 +14,10 @@
                     <h3>{{object.title }}</h3>
                     <ul class="post-meta list-inline">
                         <li class="list-inline-item">
-                            <i class="fa fa-user-circle-o"></i> <a href="#">{{ object.owner }}</a>
+                            <i class="fa fa-user-circle-o"></i> <a href="{% url 'profile' pk=object.owner.id%}">{{ object.owner }}</a>
                         </li>
                         <li class="list-inline-item">
-                            <i class="fa fa-calendar-o"></i> <a href="#">{{object.pub_date}}</a>
+                            <i class="fa fa-calendar-o"></i> <a >{{object.pub_date}}</a>
                         </li>
                         <li class="list-inline-item">
                             <i class="fa fa-edit"></i> <a href="{% url 'post_edit' pk=post.id %}">edit</a>
@@ -33,10 +33,10 @@
                         </li>
                     </ul>
                     <p> {{object.description}} </p>
-                   
+
                     
                     <hr class="mb40">
-                    <h4 class="mb40 text-uppercase font500">Comments</h4>
+                    <h4 class="mb40 text-uppercase font500">Comments:</h4>
 
                     {% for comment in comment_list %}
        

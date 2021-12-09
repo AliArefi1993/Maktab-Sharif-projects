@@ -3,7 +3,7 @@ from django.urls import path
 from post.views import ProfileView, CategoryPostListView, TagListView, TagPostListView, TagEditView, \
     PostsListView, PostDetailView, CategoryListView, Login, Logout, SignUpView, TagDeleteView, TagCreateView,\
     CategoryEditView, CategoryDeleteView, CategoryCreateView, DashboardView, PostCreateView, PostCommentView, SearchView, PostEditView,\
-    PostDeleteView
+    PostDeleteView, ContactFormView
 urlpatterns = [
 
     # path('login', user_login, name='login'),
@@ -37,6 +37,8 @@ urlpatterns = [
     path('category-delete/<int:pk>',
          CategoryDeleteView.as_view(), name='category_delete'),
     path('category-create/', CategoryCreateView.as_view(), name='category_create'),
+
+    path('contact/', ContactFormView.as_view(), name='contact'),
 
 
 ]

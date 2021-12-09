@@ -2,8 +2,7 @@ from django import forms
 from .models import Tag, Category, Post, Comment
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-
-# Profile Form
+from django.core.mail import send_mail, BadHeaderError
 
 
 class ProfileForm(forms.ModelForm):
@@ -18,7 +17,6 @@ class ProfileForm(forms.ModelForm):
         ]
 
 
-# Sign Up Form
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(
         max_length=30, required=False, help_text='Optional')
@@ -44,14 +42,6 @@ class SimpleModelForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = '__all__'
-        labels = {
-            # 'title':'نام دسته بندی',
-            # 'parent':'دسته پدر'
-            # 'title': _('TITLE')
-        }
-        # widgets = {
-        #     'name': Textarea(attrs={'cols': 80, 'rows': 20}),
-        # }
 
 
 class LoginForm(forms.Form):
@@ -77,10 +67,32 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['title', 'description', 'image', 'tag']
+        fields = ['title', 'description', 'image', 'tag', 'like']
 
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['text']
+
+
+class ContactForm(forms.Form):
+    message = forms.CharField(widget=forms.Textarea)
+    name = forms.CharField()
+    email_address = forms.EmailField(max_length=150)
+
+    def send_email(self):
+
+        subject = "Website Inquiry"
+        body = {
+            'name': self.cleaned_data['name'],
+            'email': self.cleaned_data['email_address'],
+            'message': self.cleaned_data['message'],
+        }
+        message = "\n".join(body.values())
+        try:
+            send_mail(subject, message, 'arefi_ali90@yahoo.com',
+                      ['arefi_ali90@yahoo.com'])
+            return True
+        except BadHeaderError:
+            return False

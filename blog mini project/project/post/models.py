@@ -5,7 +5,7 @@ from django.db.models.fields import BLANK_CHOICE_DASH
 from django.template.defaultfilters import slugify
 from django.template.defaultfilters import slugify
 import random
-# Create your models here.
+
 User = get_user_model()
 
 
@@ -24,6 +24,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=100, unique=True, null=True, blank=True)
     image = models.ImageField(upload_to='images/')
     tag = models.ManyToManyField(Tag, blank=True, null=True)
+    like = models.IntegerField(default=0, null=True, blank=True)
 
     def random_number_generator(self):
 

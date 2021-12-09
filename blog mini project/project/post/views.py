@@ -5,12 +5,12 @@ from django.views.generic.detail import DetailView
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.views import View
-from post.forms import LoginForm, SignUpForm, ProfileForm, TagForm, CategoryForm, PostForm, CommentForm
+from post.forms import LoginForm, SignUpForm, ProfileForm, TagForm, CategoryForm, PostForm, CommentForm, ContactForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db.models.query_utils import Q
@@ -34,7 +34,6 @@ class ProfileView(LoginRequiredMixin, UpdateView):
 
 class SignUpView(CreateView):
     """" new user can sign up here."""
-
     form_class = SignUpForm
     success_url = reverse_lazy('login')
     template_name = 'post/signup.html'
@@ -55,7 +54,6 @@ class Login(View):
                 messages.add_message(
                     request, messages.SUCCESS, 'Login Succed.')
                 next = request.GET.get('next')
-
                 if next:
                     return redirect(request.GET.get('next'))
                 return HttpResponseRedirect('/blog/dashboard')
@@ -78,7 +76,6 @@ class Logout(View):
 
 class AuthorCreateView(SuccessMessageMixin, CreateView):
     """This view is for creating a post"""
-
     model = Post
     success_url = '/success/'
     success_message = "%(name)s was logged in successfully"
@@ -197,17 +194,31 @@ class CategoryPostListView(LoginRequiredMixin, ListView):
         return self.model.objects.filter(category=self.kwargs['id'])
 
 
-class CategoryEditView(UpdateView):
+class CategoryEditView(LoginRequiredMixin, UpdateView):
     """This class view is for editing a Category"""
     model = Category
     form_class = TagForm
     success_url = reverse_lazy('category_list')
+
+    def dispatch(self, request, *args, **kwargs):
+        """ Making sure that only staffs can update categories """
+        obj = self.get_object()
+        if not request.user.is_staff:
+            raise PermissionDenied
+        return super(CategoryEditView, self).dispatch(request, *args, **kwargs)
 
 
 class CategoryDeleteView(DeleteView):
     """This class delete the selected Category from database"""
     model = Category
     success_url = reverse_lazy('category_list')
+
+    def dispatch(self, request, *args, **kwargs):
+        """ Making sure that only staffs can delete categories """
+        obj = self.get_object()
+        if not request.user.is_staff:
+            raise PermissionDenied
+        return super(CategoryDeleteView, self).dispatch(request, *args, **kwargs)
 
 
 class CategoryCreateView(CreateView):
@@ -239,11 +250,25 @@ class TagEditView(UpdateView):
     form_class = TagForm
     success_url = reverse_lazy('tag_list')
 
+    def dispatch(self, request, *args, **kwargs):
+        """ Making sure that only staffs can update tags """
+        obj = self.get_object()
+        if not request.user.is_staff:
+            raise PermissionDenied
+        return super(TagEditView, self).dispatch(request, *args, **kwargs)
+
 
 class TagDeleteView(DeleteView):
     """This class delete the selected tag from database"""
     model = Tag
     success_url = reverse_lazy('tag_list')
+
+    def dispatch(self, request, *args, **kwargs):
+        """ Making sure that only staffs can delete tags """
+        obj = self.get_object()
+        if not request.user.is_staff:
+            raise PermissionDenied
+        return super(TagDeleteView, self).dispatch(request, *args, **kwargs)
 
 
 class TagCreateView(CreateView):
@@ -259,8 +284,26 @@ class SearchView(ListView):
     model = Post
 
     def get_queryset(self, *args, **kwargs):
-        print(self.args)
         search_query = self.request.GET.get('search_box', None)
         posts = Post.objects.filter(Q(title__icontains=search_query) | Q(
             description__icontains=search_query))
         return posts
+
+
+class ContactFormView(FormView):
+    """This class view is for recieving user email"""
+
+    template_name = 'contact.html'
+    form_class = ContactForm
+    success_url = reverse_lazy('dashboard')
+    template_name = 'post/contact.html'
+
+    def form_valid(self, form):
+        send_email_status = form.send_email()
+        if send_email_status:
+            messages.success(self.request, 'Thank you for your feedback.')
+
+        else:
+
+            messages.error(self.request, 'Please try again')
+        return super().form_valid(form)
