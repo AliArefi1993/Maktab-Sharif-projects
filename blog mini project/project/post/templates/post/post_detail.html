@@ -20,6 +20,13 @@
                             <i class="fa fa-calendar-o"></i> <a href="#">{{object.pub_date}}</a>
                         </li>
                         <li class="list-inline-item">
+                            <i class="fa fa-edit"></i> <a href="{% url 'post_edit' pk=post.id %}">edit</a>
+                        </li>
+                        <li class="list-inline-item">
+
+                            <i class="fa "></i> <a href="{% url 'post_delete' pk=post.id %}">delete</a>
+                        </li>
+                        <li class="list-inline-item">
                         {% for tag in tag_list %}
                             <i class="fa fa-tags"></i> <a href="#">{{ tag.name }}</a>
                         {% endfor %}

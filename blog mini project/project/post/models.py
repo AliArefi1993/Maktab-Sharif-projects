@@ -38,9 +38,8 @@ class Post(models.Model):
             self.slug += self.random_number_generator()
         return super().save(*args, **kwargs)
 
-
-def __str__(self) -> str:
-    return self.title
+    def __str__(self) -> str:
+        return self.title
 
 
 class Comment(models.Model):

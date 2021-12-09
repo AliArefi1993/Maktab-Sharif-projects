@@ -1,5 +1,5 @@
 from django.http.response import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from .models import Post, Comment, Category, Tag
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -7,13 +7,11 @@ from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.views import View
 from post.forms import LoginForm, SignUpForm, ProfileForm, TagForm, CategoryForm, PostForm, CommentForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db.models.query_utils import Q
@@ -116,6 +114,33 @@ class PostDetailView(DetailView):
         if self.request.user != 'AnonymousUser':
             context['user'] = self.request.user
         return context
+
+
+class PostEditView(LoginRequiredMixin, UpdateView):
+    'This class view is for editing a Post '
+    model = Post
+    form_class = PostForm
+    success_url = reverse_lazy('dashboard')
+
+    def dispatch(self, request, *args, **kwargs):
+        """ Making sure that only authors can update stories """
+        obj = self.get_object()
+        if obj.owner != self.request.user:
+            return HttpResponseForbidden('Forbidden')
+        return super(PostEditView, self).dispatch(request, *args, **kwargs)
+
+
+class PostDeleteView(LoginRequiredMixin, DeleteView):
+    'This class delete the selected Post from database'
+    model = Post
+    success_url = reverse_lazy('dashboard')
+
+    def dispatch(self, request, *args, **kwargs):
+        """ Making sure that only authors can update stories """
+        obj = self.get_object()
+        if obj.owner != self.request.user:
+            return HttpResponseForbidden('Forbidden')
+        return super(PostDeleteView, self).dispatch(request, *args, **kwargs)
 
 
 class CommentView(LoginRequiredMixin, CreateView):
