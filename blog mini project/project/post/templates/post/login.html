@@ -7,7 +7,7 @@
     {% if messages %}
     {% comment %} <ul class="messages"> {% endcomment %}
         {% for message in messages %}
-        <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }} {{message.extra_tags}}</div>
+        <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }} </div>
         {% endfor %}
         {% comment %}
     </ul> {% endcomment %}

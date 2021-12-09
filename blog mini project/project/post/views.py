@@ -111,6 +111,7 @@ class PostDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         form = CommentForm()
         context['comment_list'] = Comment.objects.filter(post=context['post'])
+        context['tag_list'] = Tag.objects.filter(post=context['post'])
         context['form'] = form
         if self.request.user != 'AnonymousUser':
             context['user'] = self.request.user

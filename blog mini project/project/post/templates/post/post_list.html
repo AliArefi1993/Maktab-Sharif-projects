@@ -9,11 +9,13 @@
   {% for post in object_list %}
   <a href="{% url 'postdetail' post.slug %}"> <h3>{{ post.title }}</h3></a>
   {{post.pub_date_pretty}}
-  <br />
-  <img class="img-fluid" src= {{ post.image.url }} height=200 width=200/>
+  <img class="img-fluid " src= {{ post.image.url }} height=200 width=200/>
+  <br/>
   <br/>
 
   {% endfor %}
+
+
   </div>
 
 {% endblock content %}

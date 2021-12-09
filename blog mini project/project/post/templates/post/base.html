@@ -55,7 +55,7 @@
       <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'post_list'%}">Blog</a>
         <form action="{% url 'search' %}" class="d-flex">
-        <input class="form-control me-2" type="search" name="search_box" placeholder="جست وجوی" aria-label="Search">
+        <input class="form-control me-2" type="search" name="search_box" placeholder="search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
         {% url 'post_list' %}
@@ -65,9 +65,23 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <div class="navbar-nav ms-auto">
+
+            {% if  user.username %}
+              <a class="nav-link" href="{% url 'post_create'%}">New Post</a>
+              <a class="nav-link" href="{% url 'logout'%}">Logout</a>
+
+            {% else %}
+              <a class="nav-link" href="{% url 'login'%}">Login</a>
+              <a class="nav-link" href="{% url 'signup'%}">Signup</a>
+
+
+            {% endif %}
+
+            <a class="nav-link" href="{% url 'category_list'%}">Categories</a>
+            <a class="nav-link" href="{% url 'tag_list'%}">Tags</a>
             <a class="nav-link" href="https://www.linkedin.com/in/ali-arefi-b8453858">Linkedin</a>
             {% comment %} <a class="nav-link" href="{% static 'resume.pdf' %}">Resume</a> {% endcomment %}
-            <a class="nav-link active" href="{% url 'dashboard'%}">My Blog</a>
+            <a class="nav-link active" href="{% url 'dashboard'%}">Home</a>
             {% comment %} {% url 'allblogs'%} {% endcomment %}
             
           </div>
@@ -75,8 +89,6 @@
       </div>
     </nav>
     <div class="container">
-
-      
 
     </div>
   </header>
