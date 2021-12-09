@@ -1,4 +1,3 @@
-from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from .models import Post, Comment, Category, Tag
 from django.views.generic.list import ListView
@@ -7,7 +6,7 @@ from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.views import View
 from post.forms import LoginForm, SignUpForm, ProfileForm, TagForm, CategoryForm, PostForm, CommentForm
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -15,27 +14,35 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db.models.query_utils import Q
+from django.core.exceptions import PermissionDenied
 
 
-class ProfileView(UpdateView):
+class ProfileView(LoginRequiredMixin, UpdateView):
+    """" user can edit its information here."""
     model = User
     form_class = ProfileForm
     success_url = reverse_lazy('login')
     template_name = 'post/profile.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        """ Making sure that only user can update its pprofile """
+        obj = self.get_object()
+        if obj != self.request.user:
+            raise PermissionDenied
+        return super(ProfileView, self).dispatch(request, *args, **kwargs)
+
 
 class SignUpView(CreateView):
+    """" new user can sign up here."""
+
     form_class = SignUpForm
     success_url = reverse_lazy('login')
     template_name = 'post/signup.html'
 
 
-class SuccedLogin(View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'post/success_login.html', {'form': self.form})
-
-
 class Login(View):
+    """This view is for logging in"""
+
     form = LoginForm()
 
     def post(self, request, *args, **kwargs):
@@ -60,6 +67,7 @@ class Login(View):
 
 
 class Logout(View):
+    """This view is for logging out"""
 
     def get(self, request, *args, **kwargs):
         logout(request)
@@ -69,12 +77,15 @@ class Logout(View):
 
 
 class AuthorCreateView(SuccessMessageMixin, CreateView):
+    """This view is for creating a post"""
+
     model = Post
     success_url = '/success/'
     success_message = "%(name)s was logged in successfully"
 
 
 class DashboardView(LoginRequiredMixin, ListView):
+    """This view is for showing user's posts"""
     login_url = 'login'
     model = Post
     template_name = 'post/dashboard.html'
@@ -84,7 +95,7 @@ class DashboardView(LoginRequiredMixin, ListView):
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
-    'This class view is for creating a Tag'
+    """This class view is for creating a post after user has been logged in """
     login_url = 'login'
     form_class = PostForm
     success_url = reverse_lazy('dashboard')
@@ -97,12 +108,12 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 
 class PostsListView(ListView):
-    'This view is for showing all posts to any client'
+    """This view is for showing all posts to any client"""
     model = Post
 
 
 class PostDetailView(DetailView):
-    'This view is for showing any post to any client'
+    """This view is for showing any post to any client"""
     model = Post
 
     def get_context_data(self, **kwargs):
@@ -117,7 +128,7 @@ class PostDetailView(DetailView):
 
 
 class PostEditView(LoginRequiredMixin, UpdateView):
-    'This class view is for editing a Post '
+    """This class view is for editing a Post"""
     model = Post
     form_class = PostForm
     success_url = reverse_lazy('dashboard')
@@ -126,24 +137,26 @@ class PostEditView(LoginRequiredMixin, UpdateView):
         """ Making sure that only authors can update stories """
         obj = self.get_object()
         if obj.owner != self.request.user:
-            return HttpResponseForbidden('Forbidden')
+            raise PermissionDenied
         return super(PostEditView, self).dispatch(request, *args, **kwargs)
 
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
-    'This class delete the selected Post from database'
+    """This class delete the selected Post from database"""
     model = Post
     success_url = reverse_lazy('dashboard')
 
     def dispatch(self, request, *args, **kwargs):
-        """ Making sure that only authors can update stories """
+        """ Making sure that only authors can delete stories """
         obj = self.get_object()
         if obj.owner != self.request.user:
-            return HttpResponseForbidden('Forbidden')
+            raise PermissionDenied
         return super(PostDeleteView, self).dispatch(request, *args, **kwargs)
 
 
 class CommentView(LoginRequiredMixin, CreateView):
+    """This class view is for creating comment """
+
     form_class = CommentForm
 
     def form_valid(self, form):
@@ -158,6 +171,8 @@ class CommentView(LoginRequiredMixin, CreateView):
 
 
 class PostCommentView(View):
+    """This class view is for creating and showing comments """
+
     def get(self, request, *args, **kwargs):
         view = PostDetailView.as_view()
         return view(request, *args, **kwargs)
@@ -168,11 +183,13 @@ class PostCommentView(View):
 
 
 class CategoryListView(LoginRequiredMixin, ListView):
+    """This class shows the list of available category"""
     login_url = 'login'
     model = Category
 
 
 class CategoryPostListView(LoginRequiredMixin, ListView):
+    """This class shows the list of posts for selected category"""
     login_url = 'login'
     model = Post
 
@@ -181,32 +198,33 @@ class CategoryPostListView(LoginRequiredMixin, ListView):
 
 
 class CategoryEditView(UpdateView):
-    'This class view is for editing a Category '
+    """This class view is for editing a Category"""
     model = Category
     form_class = TagForm
     success_url = reverse_lazy('category_list')
 
 
 class CategoryDeleteView(DeleteView):
-    'This class delete the selected Category from database'
+    """This class delete the selected Category from database"""
     model = Category
     success_url = reverse_lazy('category_list')
 
 
 class CategoryCreateView(CreateView):
-    'This class view is for creating a Category'
+    """This class view is for creating a Category"""
     form_class = CategoryForm
     success_url = reverse_lazy('category_list')
     template_name = 'post/category_create.html'
 
 
 class TagListView(LoginRequiredMixin, ListView):
-    'This class shows the list of available tag'
+    """This class shows the list of available tag"""
     login_url = 'login'
     model = Tag
 
 
 class TagPostListView(LoginRequiredMixin, ListView):
+    """This class shows the list of posts for selected tag"""
     login_url = 'login'
     model = Post
 
@@ -215,25 +233,29 @@ class TagPostListView(LoginRequiredMixin, ListView):
 
 
 class TagEditView(UpdateView):
+    """This class edit the selected tag from database"""
+
     model = Tag
     form_class = TagForm
     success_url = reverse_lazy('tag_list')
 
 
 class TagDeleteView(DeleteView):
-    'This class delete the selected tag from database'
+    """This class delete the selected tag from database"""
     model = Tag
     success_url = reverse_lazy('tag_list')
 
 
 class TagCreateView(CreateView):
-    'This class view is for creating a Tag'
+    """This class view is for creating a Tag"""
     form_class = TagForm
     success_url = reverse_lazy('tag_list')
     template_name = 'post/tag_create.html'
 
 
 class SearchView(ListView):
+    """This class view is for searching in posts' title and description"""
+
     model = Post
 
     def get_queryset(self, *args, **kwargs):
