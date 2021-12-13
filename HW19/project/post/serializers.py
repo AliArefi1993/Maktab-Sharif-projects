@@ -24,10 +24,12 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(many=True)
+    tag = TagSerializer(many=True)
 
     class Meta:
         model = Post
-        fields = ['id', 'owner', 'title', 'description']
+        fields = ['id', 'owner', 'title', 'description', 'tag', 'category']
 
 
 class CommentSerializer(serializers.ModelSerializer):

@@ -10,10 +10,9 @@ from post.serializers import PostSerializer, PostDetailSerializer, PostCreateSer
 class PostList(generics.ListCreateAPIView):
     """list and create view class for post"""
 
-    queryset = Post.objects.filter(published=True).all()
+    queryset = Post.objects.all()
     permission_classes = (IsAuthenticated,)
     filterset_class = PostListFilter
-    paginate_by = 10
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
