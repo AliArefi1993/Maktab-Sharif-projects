@@ -1,22 +1,19 @@
-
 from rest_framework import status
-from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
-
-from post.models import Post
-
-from rest_framework.decorators import api_view, authentication_classes
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from post.models import Post, Category, Tag
+from post.filter import PostListFilter
 from rest_framework.response import Response
-from rest_framework import generics, mixins
+from rest_framework import generics
+from post.serializers import PostSerializer, PostDetailSerializer, PostCreateSerializer, PostUpdateSerializer, CategorySerializer, TagSerializer
 
-from post.serializers import PostSerializer, PostDetailSerializer, PostCreateSerializer, PostUpdateSerializer
 
-
-class PostList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+class PostList(generics.ListCreateAPIView):
     """list and create view class for post"""
 
     queryset = Post.objects.filter(published=True).all()
     permission_classes = (IsAuthenticated,)
+    filterset_class = PostListFilter
+    paginate_by = 10
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
@@ -44,6 +41,7 @@ class PostList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericA
 
 class PostDetailUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
     """Retrieve Update Delete view class for post"""
+
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializer
     permission_classes = (IsAuthenticated,)
@@ -59,6 +57,74 @@ class PostDetailUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
             return PostDetailSerializer
         else:
             return PostUpdateSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+
+class CategoryList(generics.ListCreateAPIView):
+    """list and create view class for Category"""
+
+    queryset = Category.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = CategorySerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+class CategoryDetailUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
+    """Retrieve Update Delete view class for Category"""
+
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = (IsAdminUser,)
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+
+class TagList(generics.ListCreateAPIView):
+    """list and create view class for Tag"""
+
+    queryset = Tag.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = CategorySerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+class TagDetailUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
+    """Retrieve Update Delete view class for Tag"""
+
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    permission_classes = (IsAdminUser,)
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)

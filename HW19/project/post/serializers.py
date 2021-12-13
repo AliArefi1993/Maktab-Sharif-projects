@@ -55,10 +55,10 @@ class PostCreateSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CategoryDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = '__all__'
+# class CategoryDetailSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Category
+#         fields = '__all__'
 
 
 class CategorySerializer(serializers.ModelSerializer):
