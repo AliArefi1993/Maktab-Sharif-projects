@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.db.models.deletion import CASCADE, DO_NOTHING
+from django.db.models.deletion import DO_NOTHING
 from django.db.models.fields import BLANK_CHOICE_DASH
 from django.template.defaultfilters import slugify
 from django.template.defaultfilters import slugify
@@ -30,6 +30,7 @@ class Post(models.Model):
     pub_date = models.DateTimeField(auto_now=True)
     slug = models.SlugField(max_length=100, unique=True)
     image = models.ImageField(blank=True, null=True)
+    published = models.BooleanField(default=False)
     tag = models.ManyToManyField(Tag, blank=True, null=True)
     category = models.ManyToManyField(Category, blank=True, null=True)
 
@@ -50,7 +51,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     text = models.CharField(max_length=200)
-    post = models.ForeignKey(Post, on_delete=CASCADE,
+    post = models.ForeignKey(Post, on_delete=DO_NOTHING,
                              related_name='comments_post')
     user = models.ForeignKey(User, on_delete=DO_NOTHING)
 
