@@ -1,10 +1,11 @@
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from post.models import Post, Category, Tag
+from post.models import Post, Category, Tag, Comment
 from post.filter import PostListFilter
 from rest_framework.response import Response
 from rest_framework import generics
-from post.serializers import PostSerializer, PostDetailSerializer, PostCreateSerializer, PostUpdateSerializer, CategorySerializer, TagSerializer
+from post.serializers import PostSerializer, PostDetailSerializer, PostCreateSerializer, PostUpdateSerializer, CategorySerializer, TagSerializer,\
+    CommentSerializer, CommentDetailSerializer
 
 
 class PostList(generics.ListCreateAPIView):
@@ -123,6 +124,40 @@ class TagDetailUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+    permission_classes = (IsAdminUser,)
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+
+class CommentList(generics.ListCreateAPIView):
+    """list and create view class for Comment"""
+
+    queryset = Comment.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = CommentSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+class CommentDetailUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
+    """Retrieve Update Delete view class for Comment"""
+
+    queryset = Comment.objects.all()
+    serializer_class = CommentDetailSerializer
     permission_classes = (IsAdminUser,)
 
     def get(self, request, *args, **kwargs):
