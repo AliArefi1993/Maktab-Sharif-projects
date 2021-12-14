@@ -15,12 +15,6 @@ class PostList(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
     filterset_class = PostListFilter
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
     def get_serializer_class(self):
         if self.request.method == 'GET':
             return PostSerializer
@@ -37,6 +31,17 @@ class PostList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         return serializer.save()
+
+    # def get_serializer_context(self):
+    #     """
+    #     Extra context provided to the serializer class.
+    #     """
+    #     return {
+    #         'request': self.request,
+    #         'format': self.format_kwarg,
+    #         'view': self,
+    #         'owner': self.request.user
+    #     }
 
 
 class PostDetailUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
@@ -58,18 +63,6 @@ class PostDetailUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
         else:
             return PostUpdateSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
-
 
 class CategoryList(generics.ListCreateAPIView):
     """list and create view class for Category"""
@@ -77,12 +70,6 @@ class CategoryList(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = CategorySerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
 
 
 class CategoryDetailUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
@@ -92,31 +79,13 @@ class CategoryDetailUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CategorySerializer
     permission_classes = (IsAdminUser,)
 
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
-
 
 class TagList(generics.ListCreateAPIView):
     """list and create view class for Tag"""
 
     queryset = Tag.objects.all()
     permission_classes = (IsAuthenticated,)
-    serializer_class = CategorySerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+    serializer_class = TagSerializer
 
 
 class TagDetailUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
@@ -126,18 +95,6 @@ class TagDetailUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TagSerializer
     permission_classes = (IsAdminUser,)
 
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
-
 
 class CommentList(generics.ListCreateAPIView):
     """list and create view class for Comment"""
@@ -146,12 +103,6 @@ class CommentList(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = CommentSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
 
 class CommentDetailUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
     """Retrieve Update Delete view class for Comment"""
@@ -159,15 +110,3 @@ class CommentDetailUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentDetailSerializer
     permission_classes = (IsAdminUser,)
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)

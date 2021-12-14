@@ -26,13 +26,15 @@ class Tag(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField()
-    owner = models.ForeignKey(User, on_delete=DO_NOTHING)
+    owner = models.ForeignKey(
+        User, on_delete=DO_NOTHING, null=True, blank=True)
     pub_date = models.DateTimeField(auto_now=True)
     slug = models.SlugField(max_length=100, unique=True)
     image = models.ImageField(blank=True, null=True)
     published = models.BooleanField(default=False)
     tag = models.ManyToManyField(Tag, blank=True, null=True)
-    category = models.ManyToManyField(Category, blank=True, null=True)
+    category = models.ManyToManyField(
+        Category, related_name='cat_post', blank=True, null=True)
 
     def random_number_generator(self):
         return str(random.randint(1000, 9999))
